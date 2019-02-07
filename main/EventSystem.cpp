@@ -2543,6 +2543,9 @@ void CEventSystem::ParseActionString(const std::string &oAction_, _tActionParseR
 		else if (sToken == "TURN") {
 			iLastTokenType = 0;
 		}
+		else if (sToken == "TRIGGER") {
+			iLastTokenType = 0;
+		}
 		else if (sToken == "NOTRIGGER")
 			oResults_.bEventTrigger = false;
 
@@ -3741,17 +3744,17 @@ void CEventSystem::UpdateDevice(const uint64_t idx, const int nValue, const std:
 			(devType == pTypeRadiator1 && !sValue.empty())
 			)
 		{
-			_log.Log(LOG_NORM, "EventSystem: Sending SetPoint to device....");
+			_log.Log(LOG_NORM, "EventSystem: Sending SetPoint to device '%s' (%g) ....", dname.c_str(), static_cast<float>(atof(sValue.c_str())));
 			m_mainworker.SetSetPoint(std::to_string(idx), static_cast<float>(atof(sValue.c_str())));
 		}
 		else if ((devType == pTypeGeneral) && (subType == sTypeZWaveThermostatMode) && nValue != -1)
 		{
-			_log.Log(LOG_NORM, "EventSystem: Sending Thermostat Mode to device....");
+			_log.Log(LOG_NORM, "EventSystem: Sending Thermostat Mode to device '%s' ....", dname.c_str());
 			m_mainworker.SetZWaveThermostatMode(std::to_string(idx), nValue);
 		}
 		else if ((devType == pTypeGeneral) && (subType == sTypeZWaveThermostatFanMode) && nValue != -1)
 		{
-			_log.Log(LOG_NORM, "EventSystem: Sending Thermostat Fan Mode to device....");
+			_log.Log(LOG_NORM, "EventSystem: Sending Thermostat Fan Mode to device '%s' ....", dname.c_str());
 			m_mainworker.SetZWaveThermostatFanMode(std::to_string(idx), nValue);
 		}
 		else if ((devType == pTypeGeneral) && (subType == sTypeTextStatus))
